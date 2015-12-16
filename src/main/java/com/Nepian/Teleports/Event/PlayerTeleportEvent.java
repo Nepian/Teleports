@@ -4,27 +4,33 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-public class PlayerWarpEvent extends CancellableEvent {
+public class PlayerTeleportEvent extends CancellableEvent {
 	private Player player;
 	private Block block;
 	private Location location;
+	private String name;
 	
-	public PlayerWarpEvent(Player player, Block block, Location location) {
+	public PlayerTeleportEvent(Player player, Block block, Location location, String name) {
 		super();
 		this.player = player;
 		this.block = block;
 		this.location = location;
+		this.name = name;
 	}
 	
 	public Player getPlayer() {
-		return this.player;
+		return player;
 	}
 	
 	public Block getBlock() {
-		return this.block;
+		return block;
 	}
 	
 	public Location getLocation() {
-		return this.location;
+		return location;
+	}
+	
+	public String getName() {
+		return name;
 	}
 }

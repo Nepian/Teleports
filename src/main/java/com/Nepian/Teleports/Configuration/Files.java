@@ -11,18 +11,18 @@ public class Files {
 	private static final Main plugin;
 
 	public static final File FOLDER_MAIN;
+	public static final File FOLDER_TELEPORTS;
 	
 	public static final File FILE_CONFIG;
-	public static final File FILE_WARPS;
 
 	enum FileType { FILE, FOLDER }
 
 	static {
 		plugin      = Main.getPlugin();
 		FOLDER_MAIN = plugin.getDataFolder();
+		FOLDER_TELEPORTS = load(NAME_FOLDER_TELEPORTS, FileType.FOLDER);
 		
 		FILE_CONFIG = load(NAME_FILE_CONFIG, FileType.FILE);
-		FILE_WARPS  = load(NAME_FILE_WARPS, FileType.FILE);
 	}
 
 	/* Private Methods ------------------------------------------------------*/

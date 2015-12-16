@@ -7,13 +7,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
-import com.Nepian.Teleports.TeleportManager;
-import com.Nepian.Teleports.Event.PlayerWarpEvent;
+import com.Nepian.Teleports.Event.PlayerTeleportEvent;
 
 public class PlayerWarpExecutor implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public static void onPlayerWarp(PlayerWarpEvent event) {
+	public static void onPlayerWarp(PlayerTeleportEvent event) {
 		
 		if (event.isCancelled()) {
 			return;
@@ -21,7 +20,7 @@ public class PlayerWarpExecutor implements Listener {
 		
 		Player player = event.getPlayer();
 		Location location = event.getLocation();
-		String name = TeleportManager.getEndName(TeleportManager.getWarp(event.getBlock()).getBlock());
+		String name = event.getName();
 		
 		player.teleport(location, TeleportCause.PLUGIN);
 		player.sendMessage("Warp to " + name + " !");

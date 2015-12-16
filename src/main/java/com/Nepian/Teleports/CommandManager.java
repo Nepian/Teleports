@@ -2,7 +2,7 @@ package com.Nepian.Teleports;
 
 import org.bukkit.command.CommandExecutor;
 
-import com.Nepian.Teleports.Command.PrintWarpsCommand;
+import com.Nepian.Teleports.Command.PrintAllTeleportLocationDataCommand;
 
 public class CommandManager {
 	private static Main plugin;
@@ -12,7 +12,7 @@ public class CommandManager {
 	}
 	
 	public static void load() {
-		registerCommand("warplist", new PrintWarpsCommand());
+		registerCommand("teleportlist", new PrintAllTeleportLocationDataCommand());
 	}
 	
 	private static void registerCommand(String name, CommandExecutor cmd) {

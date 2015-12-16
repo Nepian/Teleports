@@ -4,14 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
-import com.Nepian.Teleports.Listener.CreateWarp;
-import com.Nepian.Teleports.Listener.ExecutePlateWarp;
-import com.Nepian.Teleports.Listener.RemoveWarp;
-import com.Nepian.Teleports.Listener.CreateEnd.CreateEndExecute;
-import com.Nepian.Teleports.Listener.CreateStart.CreateStartExecute;
+import com.Nepian.Teleports.Listener.CreateTeleportListener;
+import com.Nepian.Teleports.Listener.PlateTeleportListener;
+import com.Nepian.Teleports.Listener.RemoveTeleportListener;
+import com.Nepian.Teleports.Listener.CreateTeleport.CreateTeleportExecutor;
 import com.Nepian.Teleports.Listener.PlayerWarp.PlayerWarpExecutor;
-import com.Nepian.Teleports.Listener.RemoveEnd.RemoveEndExecute;
-import com.Nepian.Teleports.Listener.RemoveStart.RemoveStartExecute;
+import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportExecutor;
 
 public class EventManager {
 	private static final Main plugin;
@@ -21,15 +19,13 @@ public class EventManager {
 	}
 	
 	public static void load() {
-		registerEvent(new CreateWarp());
-		registerEvent(new RemoveWarp());
-		registerEvent(new ExecutePlateWarp());
+		registerEvent(new CreateTeleportListener());
+		registerEvent(new RemoveTeleportListener());
+		registerEvent(new PlateTeleportListener());
 		
-		registerCreateStartEvent();
-		registerCreateEndEvent();
-		registerRemoveStartEvent();
-		registerRemoveEndEvent();
-		registerPlayerWarpEEvent();
+		registerCreateTeleportEvent();
+		registerRemoveTeleportEvent();
+		registerPlayerTeleportEvent();
 	}
 
 	public static void callEvent(Event event) {
@@ -42,23 +38,15 @@ public class EventManager {
 	
 	/* Private Methods --------------------------------------------------------------------------*/
 	
-	private static void registerCreateStartEvent() {
-		registerEvent(new CreateStartExecute());
+	private static void registerCreateTeleportEvent() {
+		registerEvent(new CreateTeleportExecutor());
 	}
 	
-	private static void registerCreateEndEvent() {
-		registerEvent(new CreateEndExecute());
+	private static void registerRemoveTeleportEvent() {
+		registerEvent(new RemoveTeleportExecutor());
 	}
 	
-	private static void registerRemoveStartEvent() {
-		registerEvent(new RemoveStartExecute());
-	}
-	
-	private static void registerRemoveEndEvent() {
-		registerEvent(new RemoveEndExecute());
-	}
-	
-	private static void registerPlayerWarpEEvent() {
+	private static void registerPlayerTeleportEvent() {
 		registerEvent(new PlayerWarpExecutor());
 	}
 }
