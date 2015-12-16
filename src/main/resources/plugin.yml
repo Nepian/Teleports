@@ -1,0 +1,9 @@
+name: Teleports
+main: com.Nepian.Teleports.Main
+version: 0.2
+author: Nepian
+commands:
+  warplist:
+    usage: /<command>
+    aliases:
+    - wl
