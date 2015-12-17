@@ -1,7 +1,9 @@
 name: Teleports
 main: com.Nepian.Teleports.Main
-version: 0.4
+version: 0.4.1
 author: Nepian
+load: POSTWORLD
+softdepend: [ Multiverse-Core ]
 commands:
   teleportlist:
     usage: /<command>
