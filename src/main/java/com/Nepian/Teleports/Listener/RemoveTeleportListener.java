@@ -23,13 +23,13 @@ public class RemoveTeleportListener implements Listener {
 			return;
 		}
 		
-		if (!TeleportManager.isTeleportBlock(event.getBlock())) {
+		if (!TeleportManager.hasTeleportLocationData(event.getBlock())) {
 			return;
 		}
 		
 		Player player = event.getPlayer();
 		Block block = event.getBlock();
-		TeleportLocationData data = TeleportManager.getTeleportLocationData(block.getLocation());
+		TeleportLocationData data = TeleportManager.getTeleportLocationData(block);
 		CancellableEvent eve = new RemoveTeleportEvent(player, block, data);
 		EventManager.callEvent(eve);
 		

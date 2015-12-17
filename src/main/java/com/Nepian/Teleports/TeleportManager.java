@@ -27,7 +27,7 @@ public class TeleportManager {
 	/* Methods ----------------------------------------------------------------------------------*/
 	
 	/**
-	 * 指定されたデータでテレポートロケーションを登録する
+	 * テレポートデータを登録する
 	 * @param event
 	 */
 	public static void put(CreateTeleportEvent event) {
@@ -35,20 +35,7 @@ public class TeleportManager {
 	}
 	
 	/**
-	 * 指定した場所をテレポートローケーションから削除する
-	 * @param location
-	 */
-	public static void remove(Location location) {
-		TeleportLocationData tld = teleports.get(location);
-		if (isEnd(tld.getType())) {
-			names.remove(tld.getName());
-		}
-		teleports.remove(location);
-		tld.deleteFile();
-	}
-	
-	/**
-	 * 指定されたデータでテレポートロケーションを削除する
+	 * テレポートデータを削除する
 	 * @param event
 	 */
 	public static void remove(RemoveTeleportEvent event) {
@@ -56,9 +43,9 @@ public class TeleportManager {
 	}
 	
 	/**
-	 * 指定した場所のテレポート先を取得する
-	 * @param name
-	 * @return 場所がテレポートロケーションとして未登録 -> null
+	 * 指定した名前のテレポート先を取得する
+	 * @param name (追加済)-> TeleportManager
+	 * @return (存在)-> Location (非存在)-> null
 	 */
 	public static Location getTeleportLocation(String name) {
 		if (!hasName(name)) return null;
@@ -66,63 +53,44 @@ public class TeleportManager {
 	}
 	
 	/**
-	 * 指定した場所のテレポート名を取得する
-	 * @param location
-	 * @return 場所がテレポートロケーションとして未登録 -> null
-	 */
-	public static String getTeleportName(Location location) {
-		if (!isTeleportLocation(location)) return null;
-		return teleports.get(location).getName();
-	}
-	
-	/**
 	 * 指定したブロックのテレポート名を取得する
-	 * @param block
-	 * @return
+	 * @param block = (追加済)-> TeleportManager
+	 * @return (存在)-> String (非存在)-> null
 	 */
 	public static String getTeleportName(Block block) {
 		return getTeleportName(block.getLocation());
 	}
 	
 	/**
-	 * 指定した場所のテレポートタイプを取得する
-	 * @param location
-	 * @return テレポートタイプではない場合 -> OTHER
+	 * 指定したブロックのテレポートタイプを取得する
+	 * @param block = (追加済)-> TeleportManager
+	 * @return (存在)-> TeleportType (非存在)-> TeleportType.OTHER
 	 */
-	public static TeleportType getType(Location location) {
-		return teleports.get(location).getType();
+	public static TeleportType getType(Block block) {
+		return getType(block.getLocation());
 	}
 	
 	/**
-	 * 指定したブロックがテレポートロケーションかを判定する
-	 * @param block
-	 * @return 場所がテレポートロケーションとして登録されていた場合 -> true
+	 * 指定したブロックがテレポートデータを所持しているかを判定する
+	 * @param block = (確認対象)
+	 * @return (所持)-> true (非所持)-> false
 	 */
-	public static boolean isTeleportBlock(Block block) {
-		return isTeleportLocation(block.getLocation());
+	public static boolean hasTeleportLocationData(Block block) {
+		return hasTeleportLocationData(block.getLocation());
 	}
 	
 	/**
-	 * 指定した場所がテレポートロケーションかを判定する
-	 * @param location
-	 * @return 場所がテレポートロケーションとして登録されていた場合 -> true
-	 */
-	public static boolean isTeleportLocation(Location location) {
-		return teleports.containsKey(location);
-	}
-	
-	/**
-	 * 指定した名前をすでに持っているか確認する
-	 * @param name
-	 * @return 名前が存在した場合 -> true
+	 * 指定した名前が存在するか確認する
+	 * @param name = (確認対象)
+	 * @return (存在)-> true (非存在)-> false
 	 */
 	public static boolean hasName(String name) {
 		return names.containsKey(name);
 	}
 	
 	/**
-	 * 登録されているテレポートロケーションを取得する
-	 * @return
+	 * 登録されているテレポートデータのコレクションを取得する
+	 * @return Collection(TeleportLocationData)
 	 */
 	public static Collection<TeleportLocationData> getTeleportLocationDatas() {
 		return teleports.values();
@@ -130,8 +98,8 @@ public class TeleportManager {
 	
 	/**
 	 * 指定したブロックのテレポート先が存在するか確認する
-	 * @param block
-	 * @return 存在した場合 -> true
+	 * @param block = (確認対象)
+	 * @return (存在)-> true (非存在)-> false
 	 */
 	public static boolean hasTeleportLocation(Block block) {
 		return hasTeleportLocation(getTeleportName(block.getLocation()));
@@ -139,24 +107,20 @@ public class TeleportManager {
 	
 	/**
 	 * 指定した名前のテレポート先が存在するか確認する
-	 * @param name
-	 * @return 存在した場合 -> true
+	 * @param name = (確認対象)
+	 * @return (存在)-> true (非存在)-> false
 	 */
 	public static boolean hasTeleportLocation(String name) {
 		return names.containsKey(name);
 	}
 	
 	/**
-	 * 指定したブロックのテレポートローケーションデータを取得する
-	 * @param block
-	 * @return 存在しなかった場合 -> null
+	 * 指定したブロックのテレポートデータを取得する
+	 * @param block = (追加済)-> TeleportManagers
+	 * @return (存在)-> TeleportLocationData (非存在)-> null
 	 */
 	public static TeleportLocationData getTeleportLocationData(Block block) {
 		return getTeleportLocationData(block.getLocation());
-	}
-	
-	public static TeleportLocationData getTeleportLocationData(Location location) {
-		return teleports.get(location);
 	}
 	
 	/* Private Methods --------------------------------------------------------------------------*/
@@ -170,6 +134,51 @@ public class TeleportManager {
 			names.put(data.getName(), data);
 		}
 		teleports.put(data.getBlockLocation(), data);
+	}
+	
+	private static TeleportLocationData getTeleportLocationData(Location location) {
+		return teleports.get(location);
+	}
+	
+	/**
+	 * 指定した場所のテレポートデータを所持しているか判定する
+	 * @param location = (確認対象)
+	 * @return (所持)-> true (非所持)-> false
+	 */
+	private static boolean hasTeleportLocationData(Location location) {
+		return teleports.containsKey(location);
+	}
+	
+	/**
+	 * 指定した場所のテレポートタイプを取得する
+	 * @param location = (追加済)-> TeleportManager
+	 * @return (存在)-> TeleportType (非存在)-> TeleportType.OTHER
+	 */
+	private static TeleportType getType(Location location) {
+		return teleports.get(location).getType();
+	}
+	
+	/**
+	 * 指定した場所のテレポート名を取得する
+	 * @param location = (追加済)-> TeleportManager
+	 * @return (存在)-> String (非存在)-> null
+	 */
+	private static String getTeleportName(Location location) {
+		if (!hasTeleportLocationData(location)) return null;
+		return teleports.get(location).getName();
+	}
+	
+	/**
+	 * 指定した場所をテレポートローケーションから削除する
+	 * @param location
+	 */
+	private static void remove(Location location) {
+		TeleportLocationData tld = teleports.get(location);
+		if (isEnd(tld.getType())) {
+			names.remove(tld.getName());
+		}
+		teleports.remove(location);
+		tld.deleteFile();
 	}
 	
 	/* Load and Save Method ---------------------------------------------------------------------*/

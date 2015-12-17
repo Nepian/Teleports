@@ -8,8 +8,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public enum Config {
-	TELEPORT_CREATE_ITEM("WATCH"),
-	TELEPORT_DIRECTION_CHANGE_ITEM("ARROW"),
+	ITEM_TELEPORT_CREATE("WATCH"),
+	ITEM_TELEPORT_CHANGE_DIRECTION("ARROW"),
+	ITEM_TELEPORT_GET_INFO("SLIME_BALL"),
 	
 	DUMMY(null);
 	

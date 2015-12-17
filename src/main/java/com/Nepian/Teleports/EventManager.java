@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 
 import com.Nepian.Teleports.Listener.ChangeTeleportDirectionListener;
 import com.Nepian.Teleports.Listener.CreateTeleportListener;
+import com.Nepian.Teleports.Listener.GetTeleportLocationDataListener;
 import com.Nepian.Teleports.Listener.PlateTeleportListener;
 import com.Nepian.Teleports.Listener.RemoveTeleportListener;
 import com.Nepian.Teleports.Listener.CreateTeleport.CreateTeleportExecutor;
@@ -25,6 +26,7 @@ public class EventManager {
 		registerEvent(new RemoveTeleportListener());
 		registerEvent(new PlateTeleportListener());
 		registerEvent(new ChangeTeleportDirectionListener());
+		registerEvent(new GetTeleportLocationDataListener());
 		
 		registerCreateTeleportEvent();
 		registerRemoveTeleportEvent();

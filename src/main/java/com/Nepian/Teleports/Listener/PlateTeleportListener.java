@@ -34,7 +34,7 @@ public class PlateTeleportListener implements Listener {
 			return;
 		}
 		
-		if (!TeleportManager.isTeleportBlock(block)) {
+		if (!TeleportManager.hasTeleportLocationData(block)) {
 			return;
 		}
 		
