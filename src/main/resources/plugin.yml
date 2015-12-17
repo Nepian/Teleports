@@ -1,6 +1,6 @@
 name: Teleports
 main: com.Nepian.Teleports.Main
-version: 0.4.1
+version: 0.5.0
 author: Nepian
 load: POSTWORLD
 softdepend: [ Multiverse-Core ]
