@@ -4,12 +4,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
+import com.Nepian.Teleports.Listener.ChangeTeleportDirectionListener;
 import com.Nepian.Teleports.Listener.CreateTeleportListener;
 import com.Nepian.Teleports.Listener.PlateTeleportListener;
 import com.Nepian.Teleports.Listener.RemoveTeleportListener;
 import com.Nepian.Teleports.Listener.CreateTeleport.CreateTeleportExecutor;
 import com.Nepian.Teleports.Listener.PlayerWarp.PlayerWarpExecutor;
 import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportExecutor;
+import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportOwnerChecker;
 
 public class EventManager {
 	private static final Main plugin;
@@ -22,6 +24,7 @@ public class EventManager {
 		registerEvent(new CreateTeleportListener());
 		registerEvent(new RemoveTeleportListener());
 		registerEvent(new PlateTeleportListener());
+		registerEvent(new ChangeTeleportDirectionListener());
 		
 		registerCreateTeleportEvent();
 		registerRemoveTeleportEvent();
@@ -43,6 +46,7 @@ public class EventManager {
 	}
 	
 	private static void registerRemoveTeleportEvent() {
+		registerEvent(new RemoveTeleportOwnerChecker());
 		registerEvent(new RemoveTeleportExecutor());
 	}
 	

@@ -17,7 +17,7 @@ public class RemoveTeleportExecutor implements Listener {
 		}
 		
 		TeleportManager.remove(event);
-		String name = event.getName();
+		String name = event.getTeleportLocationData().getName();
 		event.getPlayer().sendMessage("Removed this teleport! (" + name + ")");
 	}
 }

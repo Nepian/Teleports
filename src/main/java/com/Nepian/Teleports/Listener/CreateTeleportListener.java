@@ -38,7 +38,7 @@ public class CreateTeleportListener implements Listener {
 			return;
 		}
 		
-		if (TeleportManager.isTeleportLocation(block)) {
+		if (TeleportManager.isTeleportBlock(block)) {
 			player.sendMessage("This location already exist!");
 			return;
 		}

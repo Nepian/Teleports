@@ -34,11 +34,11 @@ public class PlateTeleportListener implements Listener {
 			return;
 		}
 		
-		if (!TeleportManager.isTeleportLocation(block)) {
+		if (!TeleportManager.isTeleportBlock(block)) {
 			return;
 		}
 		
-		String name = TeleportManager.getName(block);
+		String name = TeleportManager.getTeleportName(block);
 		Player player = event.getPlayer();
 		
 		if (!TeleportManager.hasTeleportLocation(block)) {
@@ -46,15 +46,9 @@ public class PlateTeleportListener implements Listener {
 			return;
 		}
 		
-		Location preTeleportLocation = TeleportManager.getTeleportLocation(name);
-		Block teleportBlock = BlockUtil.getBlockAbove(preTeleportLocation.getBlock());
-		Location postTeleportLocation = teleportBlock.getLocation();
+		Location teleportLocation = TeleportManager.getTeleportLocation(name);
 		
-		postTeleportLocation.setYaw(player.getLocation().getYaw());
-		postTeleportLocation.setPitch(player.getLocation().getPitch());
-		postTeleportLocation.add(0.5, 0, 0.5);
-		
-		Event eve = new PlayerTeleportEvent(player, block, postTeleportLocation, name);
+		Event eve = new PlayerTeleportEvent(player, block, teleportLocation, name);
 		
 		EventManager.callEvent(eve);
 	}

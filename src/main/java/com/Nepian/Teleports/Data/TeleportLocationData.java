@@ -1,7 +1,9 @@
 package com.Nepian.Teleports.Data;
 
 import java.io.File;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,13 +16,15 @@ public class TeleportLocationData {
 	private TeleportType type;
 	private OfflinePlayer owner;
 	private String name;
-	private Location location;
+	private Location blockLocation;
+	private Location teleportLocation;
 	
 	public TeleportLocationData(CreateTeleportEvent event) {
 		this.type = event.getType();
 		this.owner = event.getPlayer();
 		this.name = event.getName();
-		this.location = event.getLocation();
+		this.blockLocation = event.getLocation();
+		this.teleportLocation = this.setDefaultTeleportLocation(event.getLocation());
 	}
 	
 	public TeleportLocationData(File file) {
@@ -40,8 +44,16 @@ public class TeleportLocationData {
 		return name;
 	}
 	
-	public Location getLocation() {
-		return location;
+	public Location getBlockLocation() {
+		return blockLocation;
+	}
+	
+	public Location getTeleportLocation() {
+		return teleportLocation;
+	}
+	
+	public void setTeleportLocation(Location location) {
+		this.teleportLocation = location;
 	}
 	
 	@Override
@@ -49,8 +61,13 @@ public class TeleportLocationData {
 		StringBuilder sb = new StringBuilder(type.toString()).append(": ");
 		sb.append("Name:").append(name).append(", ");
 		sb.append("Owner:").append(owner.getName()).append(", ");
-		sb.append("Location:").append(LocationStringable.toString(location));
+		sb.append("Blcok:").append(LocationStringable.toString(blockLocation)).append(", ");
+		sb.append("Teleport:").append(LocationStringable.toString(teleportLocation));
 		return sb.toString();
+	}
+	
+	private Location setDefaultTeleportLocation(Location location) {
+		return location.clone().add(0.5, 1, 0.5);
 	}
 	
 	/*-------------------------------------------------------------------------------------------*/
@@ -61,20 +78,22 @@ public class TeleportLocationData {
 		public static final String TYPE = "type";
 		public static final String OWNER = "owner";
 		public static final String NAME = "name";
-		public static final String LOCATION = "location";
+		public static final String BLOCK = "block";
+		public static final String TELEPORT = "teleport";
 	}
 	
 	public void write() {
 		if (file == null) {
-			file = createFile(location);
+			file = createFile(blockLocation);
 		}
 		
 		YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
 		
 		data.set(Path.TYPE, type.toString());
-		data.set(Path.OWNER, owner);
+		data.set(Path.OWNER, owner.getUniqueId().toString());
 		data.set(Path.NAME, name);
-		data.set(Path.LOCATION, LocationStringable.toString(location));
+		data.set(Path.BLOCK, LocationStringable.toString(blockLocation));
+		data.set(Path.TELEPORT, LocationStringable.toString(teleportLocation));
 		
 		try {
 			data.save(file);
@@ -85,15 +104,16 @@ public class TeleportLocationData {
 	
 	private void read() {
 		if (file == null) {
-			file = createFile(location);
+			file = createFile(blockLocation);
 		}
 		
 		YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
 		
 		this.type = TeleportType.getType(data.getString(Path.TYPE));
-		this.owner = (OfflinePlayer) data.get(Path.OWNER);
+		this.owner = Bukkit.getOfflinePlayer(UUID.fromString(data.getString(Path.OWNER)));
 		this.name = data.getString(Path.NAME);
-		this.location = LocationStringable.toLocation(data.getString(Path.LOCATION));
+		this.blockLocation = LocationStringable.toLocation(data.getString(Path.BLOCK));
+		this.teleportLocation = LocationStringable.toLocation(data.getString(Path.TELEPORT));
 	}
 	
 	public static File createFile(Location location) {
@@ -102,8 +122,10 @@ public class TeleportLocationData {
 	}
 	
 	public void deleteFile() {
-		if (file.exists()) {
-			file.delete();
+		if (file != null) {
+			if (file.exists()) {
+				file.delete();
+			}
 		}
 	}
 }

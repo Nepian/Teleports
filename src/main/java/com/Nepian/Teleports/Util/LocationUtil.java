@@ -1,63 +1,60 @@
 package com.Nepian.Teleports.Util;
 
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.plugin.java.JavaPlugin;
-
 public class LocationUtil {
-	private static final String LOCATION_PREFIX = "(Location)";
-
-	/**
-	 * 指定したLocationを簡単なLocationに変換する
-	 * @param location
-	 * @return world, x, y, z のみのLocationを返す
-	 */
-	public static Location convertSimpleLocation(Location location) {
-		double x = location.getX();
-		double y = location.getY();
-		double z = location.getZ();
-		return new Location(location.getWorld(), x, y, z);
-	}
 	
-	/**
-	 * 指定したLocationを簡単な文字列に変換する
-	 * @param location
-	 * @return world, x, y, z を文字列として繋げた文字列を返す
-	 */
-	public static String toStringSimpleLocation(Location location) {
-		StringBuilder data = new StringBuilder(LOCATION_PREFIX);
+	public static enum Yaw {
+		SOUTH(0),
+		EAST(-90),
+		NORTH(-180),
+		WEST(-270),
 		
-		World world = location.getWorld();
-		double x = location.getX();
-		double y = location.getY();
-		double z = location.getZ();
+		OTHER(0);
 		
-		data.append(world.getName()).append(":");
-		data.append(x).append(":");
-		data.append(y).append(":");
-		data.append(z);
+		public float yaw;
 		
-		return data.toString();
-	}
-	
-	/**
-	 * 指定した文字列からLocationを取得する
-	 * @param plugin
-	 * @param string toStringSimpleLocationで変換された文字列
-	 * @return 文字列から取得したLocationを返す
-	 */
-	public static Location getSimpleLocationFromString(JavaPlugin plugin, String string) {
-		if (!string.startsWith(LOCATION_PREFIX)) {
-			return null;
+		Yaw(float yaw) {
+			this.yaw = yaw;
 		}
 		
-		String[] strings = string.substring(LOCATION_PREFIX.length()).split(":");
+		public static Yaw getDirection(float yaw) {
+			float value = Math.abs(yaw) % 360;
+			
+			if (0 <= value && value < 45) {
+				return SOUTH;
+			}
+			
+			if (45 <= value && value < 135) {
+				return EAST;
+			}
+			
+			if (135 <= value && value < 225) {
+				return NORTH;
+			}
+			
+			if (225 <= value && value < 315) {
+				return WEST;
+			}
+			
+			if (315 <= value && value < 360) {
+				return SOUTH;
+			}
+			
+			return OTHER;
+		}
 		
-		World world = WorldUtil.getWorld(plugin, strings[0]);
-		double x = Double.valueOf(strings[1]);
-		double y = Double.valueOf(strings[2]);
-		double z = Double.valueOf(strings[3]);
-		
-		return new Location(world, x, y, z);
+		public static float getYawNextDirection(float yaw) {
+			switch (getDirection(yaw)) {
+			case SOUTH:
+				return EAST.yaw;
+			case EAST:
+				return NORTH.yaw;
+			case NORTH:
+				return WEST.yaw;
+			case WEST:
+				return SOUTH.yaw;
+			default:
+				return SOUTH.yaw;
+			}
+		}
 	}
 }

@@ -3,11 +3,13 @@ package com.Nepian.Teleports.Configuration;
 import java.io.File;
 import java.io.IOException;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public enum Config {
-	WARP_REGISTERING_ITEM("WATCH"),
+	TELEPORT_CREATE_ITEM("WATCH"),
+	TELEPORT_DIRECTION_CHANGE_ITEM("ARROW"),
 	
 	DUMMY(null);
 	
@@ -32,6 +34,10 @@ public enum Config {
 
 	public int getInt() {
 		return (int) this.get();
+	}
+	
+	public Material getMaterial() {
+		return Material.getMaterial(this.getString());
 	}
 
 	public static void load() {

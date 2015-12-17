@@ -52,7 +52,7 @@ public class TeleportManager {
 	 * @param event
 	 */
 	public static void remove(RemoveTeleportEvent event) {
-		remove(event.getLocation());
+		remove(event.getTeleportLocationData().getBlockLocation());
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class TeleportManager {
 	 */
 	public static Location getTeleportLocation(String name) {
 		if (!hasName(name)) return null;
-		return names.get(name).getLocation();
+		return names.get(name).getTeleportLocation();
 	}
 	
 	/**
@@ -70,13 +70,18 @@ public class TeleportManager {
 	 * @param location
 	 * @return 場所がテレポートロケーションとして未登録 -> null
 	 */
-	public static String getName(Location location) {
+	public static String getTeleportName(Location location) {
 		if (!isTeleportLocation(location)) return null;
 		return teleports.get(location).getName();
 	}
 	
-	public static String getName(Block block) {
-		return getName(block.getLocation());
+	/**
+	 * 指定したブロックのテレポート名を取得する
+	 * @param block
+	 * @return
+	 */
+	public static String getTeleportName(Block block) {
+		return getTeleportName(block.getLocation());
 	}
 	
 	/**
@@ -93,7 +98,7 @@ public class TeleportManager {
 	 * @param block
 	 * @return 場所がテレポートロケーションとして登録されていた場合 -> true
 	 */
-	public static boolean isTeleportLocation(Block block) {
+	public static boolean isTeleportBlock(Block block) {
 		return isTeleportLocation(block.getLocation());
 	}
 	
@@ -129,7 +134,29 @@ public class TeleportManager {
 	 * @return 存在した場合 -> true
 	 */
 	public static boolean hasTeleportLocation(Block block) {
-		return getTeleportLocation(getName(block.getLocation())) != null;
+		return hasTeleportLocation(getTeleportName(block.getLocation()));
+	}
+	
+	/**
+	 * 指定した名前のテレポート先が存在するか確認する
+	 * @param name
+	 * @return 存在した場合 -> true
+	 */
+	public static boolean hasTeleportLocation(String name) {
+		return names.containsKey(name);
+	}
+	
+	/**
+	 * 指定したブロックのテレポートローケーションデータを取得する
+	 * @param block
+	 * @return 存在しなかった場合 -> null
+	 */
+	public static TeleportLocationData getTeleportLocationData(Block block) {
+		return getTeleportLocationData(block.getLocation());
+	}
+	
+	public static TeleportLocationData getTeleportLocationData(Location location) {
+		return teleports.get(location);
 	}
 	
 	/* Private Methods --------------------------------------------------------------------------*/
@@ -142,7 +169,7 @@ public class TeleportManager {
 		if (isEnd(data.getType())) {
 			names.put(data.getName(), data);
 		}
-		teleports.put(data.getLocation(), data);
+		teleports.put(data.getBlockLocation(), data);
 	}
 	
 	/* Load and Save Method ---------------------------------------------------------------------*/
