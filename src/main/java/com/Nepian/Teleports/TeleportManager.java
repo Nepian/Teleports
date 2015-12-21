@@ -116,11 +116,28 @@ public class TeleportManager {
 	
 	/**
 	 * 指定したブロックのテレポートデータを取得する
-	 * @param block = (追加済)-> TeleportManagers
+	 * @param block = (追加済)-> TeleportManager
 	 * @return (存在)-> TeleportLocationData (非存在)-> null
 	 */
 	public static TeleportLocationData getTeleportLocationData(Block block) {
 		return getTeleportLocationData(block.getLocation());
+	}
+	
+	/**
+	 * 登録されている終点のテレポートデータをコレクションで取得する
+	 * @return Collection(TeleportLocationData)
+	 */
+	public static Collection<TeleportLocationData> getEndLocationDatas() {
+		return names.values();
+	}
+	
+	/**
+	 * 指定して名前の終点テレポートデータを取得する
+	 * @param name = (追加済)-> TeleportManager
+	 * @return (存在)-> String (非存在)-> null
+	 */
+	public static TeleportLocationData getEndLocationData(String name) {
+		return names.get(name);
 	}
 	
 	/* Private Methods --------------------------------------------------------------------------*/

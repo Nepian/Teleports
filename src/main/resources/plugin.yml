@@ -5,7 +5,7 @@ author: Nepian
 load: POSTWORLD
 softdepend: [ Multiverse-Core ]
 commands:
-  teleportlist:
+  teleports:
     usage: /<command>
     aliases:
-    - tl
+    - tele
