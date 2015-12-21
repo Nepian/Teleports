@@ -25,7 +25,7 @@ public class ListCommand extends SubCommand {
 		
 		if (args.length == 0) {
 			StringBuffer message = new StringBuffer("");
-			message.append("Teleports End Location List\n");
+			message.append("\nTeleports End Location List\n");
 			
 			for (TeleportLocationData data : TeleportManager.getEndLocationDatas()) {
 				String location = LocationStringable.toString(data.getBlockLocation());
@@ -51,7 +51,7 @@ public class ListCommand extends SubCommand {
 			String name = end.getName();
 			
 			StringBuilder message = new StringBuilder("");
-			message.append("Teleports Start Location List of [" + name + "]\n");
+			message.append("\nTeleports Start Location List of [" + name + "]\n");
 			
 			for (TeleportLocationData data :TeleportManager.getTeleportLocationDatas()) {
 				
