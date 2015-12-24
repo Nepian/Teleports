@@ -53,22 +53,26 @@ public class ListCommand extends SubCommand {
 			StringBuilder message = new StringBuilder("");
 			message.append("\nTeleports Start Location List of [" + name + "]\n");
 			
-			for (TeleportLocationData data :TeleportManager.getTeleportLocationDatas()) {
+			if (TeleportManager.getTeleportLocationDatas().size() <= 0) {
+				message.append("No starting location.");
+			} else {
+				for (TeleportLocationData data :TeleportManager.getTeleportLocationDatas()) {
 				
-				if (data.getType() != TeleportType.START) {
-					continue;
+					if (data.getType() != TeleportType.START) {
+						continue;
+					}
+				
+					if (!data.getName().equalsIgnoreCase(name)) {
+						continue;
+					}
+				
+					String owner = data.getOwner().getName();
+					String location = LocationStringable.toString(data.getBlockLocation());
+				
+					message.append(" # ");
+					message.append("Owner: ").append(owner).append(", ");
+					message.append("Location: ").append(location).append("\n");
 				}
-				
-				if (!data.getName().equalsIgnoreCase(name)) {
-					continue;
-				}
-				
-				String owner = data.getOwner().getName();
-				String location = LocationStringable.toString(data.getBlockLocation());
-				
-				message.append(" # ");
-				message.append("Owner: ").append(owner).append(", ");
-				message.append("Location: ").append(location).append("\n");
 			}
 			
 			sender.sendMessage(message.toString());
