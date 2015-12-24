@@ -83,7 +83,7 @@ public class ListCommand extends SubCommand {
 
 	@Override
 	public String getPossibleArguments() {
-		return "<EndLocationName>";
+		return "<End Location Name>";
 	}
 
 	@Override
