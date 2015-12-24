@@ -9,6 +9,7 @@ import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import com.Nepian.Teleports.Command.Sub.HelpCommand;
 import com.Nepian.Teleports.Command.Sub.ListCommand;
 
 public class CommandHandler implements CommandExecutor {
@@ -18,6 +19,7 @@ public class CommandHandler implements CommandExecutor {
 	public CommandHandler() {
 		subCommands = new ArrayList<SubCommand>();
 		registerSubCommand(new ListCommand());
+		registerSubCommand(new HelpCommand(this));
 	}
 
 	@Override
@@ -49,7 +51,7 @@ public class CommandHandler implements CommandExecutor {
 			}
 		}
 		
-		sender.sendMessage("Unknown sub-command. Type \"/" + label + "help\" for a list of commands.");
+		sender.sendMessage("Unknown sub-command. Type \"/" + label + " help\" for a list of commands.");
 		
 		return true;
 	}

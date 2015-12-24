@@ -21,32 +21,43 @@ public class HelpCommand extends SubCommand {
 
 	@Override
 	public void execute(CommandSender sender, String label, String[] args) throws CommandException {
-		// TODO Auto-generated method stub
-
+		sender.sendMessage("");
+		sender.sendMessage("Teleports Commands");
+		
+		for (SubCommand cmd : mainCommandHandler.getSubCommand()) {
+			if (cmd.getType() != SubCommandType.GENERIC) {
+				continue;
+			}
+			
+			StringBuilder usage = new StringBuilder("/" + label + " ");
+			usage.append(cmd.getName());
+			
+			if (cmd.getPossibleArguments().length() > 0) {
+				usage.append(" ").append(cmd.getPossibleArguments());
+			}
+			
+			sender.sendMessage(usage.toString());
+		}
 	}
 
 	@Override
 	public String getPossibleArguments() {
-		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	@Override
 	public int getMinimumArguments() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public List<String> getTutorial() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public SubCommandType getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return SubCommandType.HIDDEN;
 	}
 
 }
