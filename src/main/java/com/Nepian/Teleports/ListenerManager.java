@@ -9,12 +9,13 @@ import com.Nepian.Teleports.Listener.CreateTeleportListener;
 import com.Nepian.Teleports.Listener.GetTeleportLocationDataListener;
 import com.Nepian.Teleports.Listener.PlateTeleportListener;
 import com.Nepian.Teleports.Listener.RemoveTeleportListener;
+import com.Nepian.Teleports.Listener.AfterCommand.AddMemberListener;
 import com.Nepian.Teleports.Listener.CreateTeleport.CreateTeleportExecutor;
 import com.Nepian.Teleports.Listener.PlayerWarp.PlayerWarpExecutor;
 import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportExecutor;
 import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportOwnerChecker;
 
-public class EventManager {
+public class ListenerManager {
 	private static final Main plugin;
 
 	static {
@@ -22,37 +23,42 @@ public class EventManager {
 	}
 	
 	public static void load() {
-		registerEvent(new CreateTeleportListener());
-		registerEvent(new RemoveTeleportListener());
-		registerEvent(new PlateTeleportListener());
-		registerEvent(new ChangeTeleportDirectionListener());
-		registerEvent(new GetTeleportLocationDataListener());
+		registerListener(new CreateTeleportListener());
+		registerListener(new RemoveTeleportListener());
+		registerListener(new PlateTeleportListener());
+		registerListener(new ChangeTeleportDirectionListener());
+		registerListener(new GetTeleportLocationDataListener());
 		
-		registerCreateTeleportEvent();
-		registerRemoveTeleportEvent();
-		registerPlayerTeleportEvent();
+		registerCreateTeleportListener();
+		registerRemoveTeleportListener();
+		registerPlayerTeleportListener();
+		registerAfterCommandListener();
 	}
 
 	public static void callEvent(Event event) {
 		Bukkit.getPluginManager().callEvent(event);
 	}
 
-	public static void registerEvent(Listener listener) {
+	public static void registerListener(Listener listener) {
 		plugin.getServer().getPluginManager().registerEvents(listener, plugin);
 	}
 	
 	/* Private Methods --------------------------------------------------------------------------*/
 	
-	private static void registerCreateTeleportEvent() {
-		registerEvent(new CreateTeleportExecutor());
+	private static void registerCreateTeleportListener() {
+		registerListener(new CreateTeleportExecutor());
 	}
 	
-	private static void registerRemoveTeleportEvent() {
-		registerEvent(new RemoveTeleportOwnerChecker());
-		registerEvent(new RemoveTeleportExecutor());
+	private static void registerRemoveTeleportListener() {
+		registerListener(new RemoveTeleportOwnerChecker());
+		registerListener(new RemoveTeleportExecutor());
 	}
 	
-	private static void registerPlayerTeleportEvent() {
-		registerEvent(new PlayerWarpExecutor());
+	private static void registerPlayerTeleportListener() {
+		registerListener(new PlayerWarpExecutor());
+	}
+	
+	private static void registerAfterCommandListener() {
+		registerListener(new AddMemberListener());
 	}
 }

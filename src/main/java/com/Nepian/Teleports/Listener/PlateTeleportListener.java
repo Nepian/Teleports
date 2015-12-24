@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.Nepian.Teleports.EventManager;
+import com.Nepian.Teleports.ListenerManager;
 import com.Nepian.Teleports.TeleportManager;
 import com.Nepian.Teleports.Data.TeleportType;
 import com.Nepian.Teleports.Event.PlayerTeleportEvent;
@@ -50,6 +50,6 @@ public class PlateTeleportListener implements Listener {
 		
 		Event eve = new PlayerTeleportEvent(player, block, teleportLocation, name);
 		
-		EventManager.callEvent(eve);
+		ListenerManager.callEvent(eve);
 	}
 }

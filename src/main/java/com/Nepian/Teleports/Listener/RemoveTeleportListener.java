@@ -7,7 +7,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import com.Nepian.Teleports.EventManager;
+import com.Nepian.Teleports.ListenerManager;
 import com.Nepian.Teleports.TeleportManager;
 import com.Nepian.Teleports.Data.TeleportLocationData;
 import com.Nepian.Teleports.Data.TeleportType;
@@ -31,7 +31,7 @@ public class RemoveTeleportListener implements Listener {
 		Block block = event.getBlock();
 		TeleportLocationData data = TeleportManager.getTeleportLocationData(block);
 		CancellableEvent eve = new RemoveTeleportEvent(player, block, data);
-		EventManager.callEvent(eve);
+		ListenerManager.callEvent(eve);
 		
 		if (eve.isCancelled()) {
 			event.setCancelled(true);

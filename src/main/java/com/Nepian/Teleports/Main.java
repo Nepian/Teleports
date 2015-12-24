@@ -12,7 +12,7 @@ public class Main extends JavaPlugin {
 		plugin = this;
 		
 		Config.load();
-		EventManager.load();
+		ListenerManager.load();
 		CommandManager.load();
 		TeleportManager.load();
 	}

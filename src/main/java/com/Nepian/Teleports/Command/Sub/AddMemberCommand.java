@@ -12,6 +12,7 @@ import org.bukkit.metadata.MetadataValue;
 import com.Nepian.Teleports.Main;
 import com.Nepian.Teleports.Command.SubCommand;
 import com.Nepian.Teleports.Metadata.AddMemberMetadata;
+import com.Nepian.Teleports.Metadata.MetadataKeys;
 import com.Nepian.Teleports.Util.PlayerUtil;
 
 public class AddMemberCommand extends SubCommand {
@@ -38,7 +39,7 @@ public class AddMemberCommand extends SubCommand {
 		Player player = (Player) sender;
 		AddMemberMetadata data = new AddMemberMetadata(member);
 		MetadataValue meta = new FixedMetadataValue(Main.getPlugin(), data);
-		player.setMetadata("addmemberflag", meta);
+		player.setMetadata(MetadataKeys.ADD_MEMBER, meta);
 		
 		sender.sendMessage("Please click the block you want to add member.");
 	}

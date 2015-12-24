@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.Nepian.Teleports.EventManager;
+import com.Nepian.Teleports.ListenerManager;
 import com.Nepian.Teleports.TeleportManager;
 import com.Nepian.Teleports.Data.TeleportSettingType;
 import com.Nepian.Teleports.Data.TeleportType;
@@ -58,6 +58,6 @@ public class CreateTeleportListener implements Listener {
 		}
 		
 		Event eve = new CreateTeleportEvent(player, block, name);
-		EventManager.callEvent(eve);
+		ListenerManager.callEvent(eve);
 	}
 }
