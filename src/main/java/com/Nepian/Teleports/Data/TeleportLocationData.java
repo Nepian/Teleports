@@ -22,6 +22,7 @@ public class TeleportLocationData {
 	private Location blockLocation;
 	private Location teleportLocation;
 	private List<OfflinePlayer> member;
+	private boolean privateTeleport;
 	
 	public TeleportLocationData(CreateTeleportEvent event) {
 		this.type = event.getType();
@@ -30,6 +31,7 @@ public class TeleportLocationData {
 		this.blockLocation = event.getLocation();
 		this.teleportLocation = initTeleportLocation(event.getLocation());
 		this.member = new LinkedList<OfflinePlayer>();
+		this.privateTeleport = false;
 	}
 	
 	public TeleportLocationData(File file) {
@@ -69,6 +71,14 @@ public class TeleportLocationData {
 		this.teleportLocation = location;
 	}
 	
+	public void setPrivate() {
+		this.privateTeleport = true;
+	}
+	
+	public void setPublic() {
+		this.privateTeleport = false;
+	}
+	
 	/* Method -----------------------------------------------------------------------------------*/
 	
 	@Override
@@ -78,7 +88,8 @@ public class TeleportLocationData {
 		sb.append("Owner: ").append(owner.getName()).append("\n");
 		sb.append("Blcok: ").append(LocationStringable.toString(blockLocation)).append("\n");
 		sb.append("Teleport: ").append(LocationStringable.toString(teleportLocation)).append("\n");
-		sb.append("Member: ").append(memberToString(member));
+		sb.append("Member: ").append(memberToString(member)).append("\n");
+		sb.append("Private: ").append(privateTeleport);
 		return sb.toString();
 	}
 	
@@ -92,6 +103,10 @@ public class TeleportLocationData {
 	
 	public void addMemebr(OfflinePlayer player) {
 		member.add(player);
+	}
+	
+	public boolean isPrivate() {
+		return privateTeleport;
 	}
 	
 	/* Private Method ---------------------------------------------------------------------------*/
@@ -151,7 +166,7 @@ public class TeleportLocationData {
 	private static String memberToString(List<OfflinePlayer> member) {
 		StringBuilder str = new StringBuilder("");
 		for (OfflinePlayer player : member) {
-			str.append(player.getName()).append(", ");
+			str.append(player.getName()).append(" ");
 		}
 		return str.toString();
 	}
@@ -167,6 +182,7 @@ public class TeleportLocationData {
 		public static final String BLOCK = "block";
 		public static final String TELEPORT = "teleport";
 		public static final String MEMBER = "member";
+		public static final String PRIVATE = "private";
 	}
 	
 	public void write() {
@@ -182,6 +198,7 @@ public class TeleportLocationData {
 		data.set(Path.BLOCK, LocationStringable.toString(blockLocation));
 		data.set(Path.TELEPORT, LocationStringable.toString(teleportLocation));
 		data.set(Path.MEMBER, getStringUidList(member));
+		data.set(Path.PRIVATE, privateTeleport);
 		
 		try {
 			data.save(file);
@@ -203,5 +220,6 @@ public class TeleportLocationData {
 		this.blockLocation = LocationStringable.toLocation(data.getString(Path.BLOCK));
 		this.teleportLocation = LocationStringable.toLocation(data.getString(Path.TELEPORT));
 		this.member = getOfflinePlayerList(data.getStringList(Path.MEMBER));
+		this.privateTeleport = data.getBoolean(Path.PRIVATE, false);
 	}
 }
