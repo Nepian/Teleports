@@ -15,20 +15,20 @@ import com.Nepian.Teleports.Data.TeleporterType;
 import com.Nepian.Teleports.Event.PlayerTeleportEvent;
 import com.Nepian.Teleports.Util.BlockUtil;
 
-public class PlateTeleportListener implements Listener {
+public class ButtonTeleportListener implements Listener {
 
 	@EventHandler
 	public static void onPlayerInteract(PlayerInteractEvent event) {
 		
-		if (event.getAction() != Action.PHYSICAL) {
+		if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
 			return;
 		}
 		
-		if (!BlockUtil.isPlate(event.getClickedBlock())) {
+		if (!BlockUtil.isButton(event.getClickedBlock())) {
 			return;
 		}
 		
-		Block block = BlockUtil.getBlockUnder(event.getClickedBlock());
+		Block block = BlockUtil.getBlockRelative(event.getClickedBlock());
 		
 		if (!TeleporterType.isStart(block)) {
 			return;

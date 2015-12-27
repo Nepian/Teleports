@@ -1,6 +1,6 @@
 name: Teleports
 main: com.Nepian.Teleports.Main
-version: 0.5.3
+version: 0.6.0
 author: Nepian
 load: POSTWORLD
 softdepend: [ Multiverse-Core ]
@@ -9,3 +9,19 @@ commands:
     usage: /<command>
     aliases:
     - tele
+permissions:
+  Teleports.*:
+    description: Give all permissions for Teleports.
+    default: op
+    children:
+      Teleports.admin: true
+      Teleports.public: true
+  Teleports.public:
+    description: Give public permissions for Teleports.
+    default: true
+    children:
+      Teleports.command.help: true
+      Teleports.command.list: true
+      Teleports.command.addmember: true
+      Teleports.command.changeprivate: true
+      Teleports.create: true

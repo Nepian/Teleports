@@ -10,6 +10,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import com.Nepian.Teleports.Command.Sub.AddMemberCommand;
+import com.Nepian.Teleports.Command.Sub.ChangePrivateCommand;
 import com.Nepian.Teleports.Command.Sub.HelpCommand;
 import com.Nepian.Teleports.Command.Sub.ListCommand;
 
@@ -19,6 +20,7 @@ public class CommandHandler implements CommandExecutor {
 	
 	public CommandHandler() {
 		subCommands = new ArrayList<SubCommand>();
+		registerSubCommand(new ChangePrivateCommand());
 		registerSubCommand(new AddMemberCommand());
 		registerSubCommand(new ListCommand());
 		registerSubCommand(new HelpCommand(this));

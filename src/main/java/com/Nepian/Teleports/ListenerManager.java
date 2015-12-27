@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
+import com.Nepian.Teleports.Listener.ButtonTeleportListener;
 import com.Nepian.Teleports.Listener.ChangeTeleporterDirectionListener;
 import com.Nepian.Teleports.Listener.GetTeleportLocationDataListener;
 import com.Nepian.Teleports.Listener.PlateTeleportListener;
@@ -32,7 +33,10 @@ public class ListenerManager {
 	public static void load() {
 		registerListener(new TeleporterCreatingListener());
 		registerListener(new RemoveTeleportListener());
+		
 		registerListener(new PlateTeleportListener());
+		registerListener(new ButtonTeleportListener());
+		
 		registerListener(new ChangeTeleporterDirectionListener());
 		registerListener(new GetTeleportLocationDataListener());
 		

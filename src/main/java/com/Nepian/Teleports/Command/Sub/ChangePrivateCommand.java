@@ -29,18 +29,19 @@ public class ChangePrivateCommand extends SubCommand {
 		
 		Player player = (Player) sender;
 		String flagString = args[0];
+		boolean isPrivate = false;
 
-		try {
-			boolean isPrivate = Boolean.valueOf(flagString);
-			MetadataValue meta = new FixedMetadataValue(Main.getPlugin(), isPrivate);
-			
-			player.setMetadata(MetadataKeys.CHANGE_PRIVATE, meta);
-			player.sendMessage("Please click the teleporter you want to change private.");
-			
-		} catch (Exception e) {
+		if (flagString.equalsIgnoreCase("true") || flagString.equalsIgnoreCase("false")) {
+			isPrivate = Boolean.valueOf(flagString); 
+		} else {
 			player.sendMessage("Invalid args");
 			return;
 		}
+		
+		MetadataValue meta = new FixedMetadataValue(Main.getPlugin(), isPrivate);
+		
+		player.setMetadata(MetadataKeys.CHANGE_PRIVATE, meta);
+		player.sendMessage("Please click the teleporter you want to change private.");
 	}
 
 	@Override
