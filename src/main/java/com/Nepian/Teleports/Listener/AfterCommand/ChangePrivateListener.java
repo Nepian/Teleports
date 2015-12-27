@@ -1,11 +1,9 @@
 package com.Nepian.Teleports.Listener.AfterCommand;
 
-import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.metadata.MetadataValue;
 
@@ -14,24 +12,24 @@ import com.Nepian.Teleports.TeleporterManager;
 import com.Nepian.Teleports.Configuration.Properties;
 import com.Nepian.Teleports.Data.TeleporterData;
 import com.Nepian.Teleports.Data.TeleporterType;
-import com.Nepian.Teleports.Metadata.AddMemberMetadata;
 import com.Nepian.Teleports.Metadata.MetadataKeys;
 import com.Nepian.Teleports.Util.ActionUtil;
 
-public class AddMemberListener implements Listener {
+public class ChangePrivateListener implements Listener {
 
 	@EventHandler
-	public static void onAddMember(PlayerInteractEvent event) {
+	public static void onChangePrivate(PlayerInteractEvent event) {
 		
-		if (!isClickedBlock(event.getAction())) {
-			return;
-		}
-		
-		if (!hasMetadata(event.getPlayer())) {
+		if (!ActionUtil.isClickedBlock(event.getAction())) {
 			return;
 		}
 		
 		Player player = event.getPlayer();
+		
+		if (!player.hasMetadata(MetadataKeys.CHANGE_PRIVATE)) {
+			return;
+		}
+		
 		Block block = event.getClickedBlock();
 
 		if (!isTeleporter(block)) {
@@ -50,40 +48,31 @@ public class AddMemberListener implements Listener {
 			}
 		}
 		
-		for (MetadataValue metadataValue : player.getMetadata(MetadataKeys.ADD_MEMBER)) {
-			AddMemberMetadata meta = (AddMemberMetadata) metadataValue.value();
-			OfflinePlayer member = meta.getPlayer();
+		for (MetadataValue metadataValue : player.getMetadata(MetadataKeys.CHANGE_PRIVATE)) {
+			boolean isPrivate = metadataValue.asBoolean();
 			
-			data.addMemebr(member);
+			data.changePrivate(isPrivate);
 			removeMetadata(player);
 			
-			player.sendMessage("Success adding a member " + member.getName());
+			player.sendMessage("Success changing private -> " + isPrivate);
 		}
 	}
 	
 	/* Private Method ---------------------------------------------------------------------------*/
 	
 	private static void removeMetadata(Player player) {
-		player.removeMetadata(MetadataKeys.ADD_MEMBER, Main.getPlugin());
-	}
-	
-	private static boolean isOwner(Player player, TeleporterData data) {
-		return player.equals(data.getOwner());
+		player.removeMetadata(MetadataKeys.CHANGE_PRIVATE, Main.getPlugin());
 	}
 	
 	private static boolean isTeleporter(Block block) {
 		return !TeleporterType.isOther(block) && TeleporterManager.hasTeleporterData(block);
 	}
 	
-	private static boolean hasMetadata(Player player) {
-		return player.hasMetadata(MetadataKeys.ADD_MEMBER);
-	}
-	
-	private static boolean isClickedBlock(Action action) {
-		return ActionUtil.isClickedBlock(action);
-	}
-	
 	private static boolean isAdmin(Player player) {
 		return player.hasPermission(Properties.PERM_ADMIN);
+	}
+	
+	private static boolean isOwner(Player player, TeleporterData data) {
+		return player.equals(data.getOwner());
 	}
 }

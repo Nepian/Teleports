@@ -6,12 +6,12 @@ import java.util.List;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 
-import com.Nepian.Teleports.TeleportManager;
+import com.Nepian.Teleports.TeleporterManager;
 import com.Nepian.Teleports.Command.CommandStrings;
 import com.Nepian.Teleports.Command.SubCommand;
 import com.Nepian.Teleports.Data.LocationStringable;
-import com.Nepian.Teleports.Data.TeleportLocationData;
-import com.Nepian.Teleports.Data.TeleportType;
+import com.Nepian.Teleports.Data.TeleporterData;
+import com.Nepian.Teleports.Data.TeleporterType;
 
 public class ListCommand extends SubCommand {
 	
@@ -27,7 +27,7 @@ public class ListCommand extends SubCommand {
 			StringBuffer message = new StringBuffer("");
 			message.append("\nTeleports End Location List\n");
 			
-			for (TeleportLocationData data : TeleportManager.getEndLocationDatas()) {
+			for (TeleporterData data : TeleporterManager.getEndLocationDatas()) {
 				String location = LocationStringable.toString(data.getBlockLocation());
 				
 				message.append(" # ");
@@ -42,23 +42,23 @@ public class ListCommand extends SubCommand {
 		
 		if (args.length == 1) {
 			
-			if (!TeleportManager.hasName(args[0])) {
+			if (!TeleporterManager.hasName(args[0])) {
 				sender.sendMessage("Teleport Location doesn't exist.");
 				return;
 			}
 			
-			TeleportLocationData end = TeleportManager.getEndLocationData(args[0]);
+			TeleporterData end = TeleporterManager.getEndLocationData(args[0]);
 			String name = end.getName();
 			
 			StringBuilder message = new StringBuilder("");
 			message.append("\nTeleports Start Location List of [" + name + "]\n");
 			
-			if (TeleportManager.getTeleportLocationDatas().size() <= 0) {
+			if (TeleporterManager.getTeleportLocationDatas().size() <= 0) {
 				message.append("No starting location.");
 			} else {
-				for (TeleportLocationData data :TeleportManager.getTeleportLocationDatas()) {
+				for (TeleporterData data :TeleporterManager.getTeleportLocationDatas()) {
 				
-					if (data.getType() != TeleportType.START) {
+					if (data.getType() != TeleporterType.START) {
 						continue;
 					}
 				

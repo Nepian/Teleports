@@ -12,36 +12,36 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.Nepian.Teleports.Configuration.Files;
-import com.Nepian.Teleports.Event.CreateTeleportEvent;
+import com.Nepian.Teleports.Event.TeleporterCreatingEvent;
 
-public class TeleportLocationData {
+public class TeleporterData {
 	private File file;
-	private TeleportType type;
+	private TeleporterType type;
 	private OfflinePlayer owner;
 	private String name;
 	private Location blockLocation;
 	private Location teleportLocation;
 	private List<OfflinePlayer> member;
-	private boolean privateTeleport;
+	private boolean isPrivate;
 	
-	public TeleportLocationData(CreateTeleportEvent event) {
+	public TeleporterData(TeleporterCreatingEvent event) {
 		this.type = event.getType();
 		this.owner = event.getPlayer();
 		this.name = event.getName();
 		this.blockLocation = event.getLocation();
 		this.teleportLocation = initTeleportLocation(event.getLocation());
 		this.member = new LinkedList<OfflinePlayer>();
-		this.privateTeleport = false;
+		this.isPrivate = false;
 	}
 	
-	public TeleportLocationData(File file) {
+	public TeleporterData(File file) {
 		this.file = file;
 		this.read();
 	}
 	
 	/* Getter -----------------------------------------------------------------------------------*/
 		
-	public TeleportType getType() {
+	public TeleporterType getType() {
 		return type;
 	}
 	
@@ -72,11 +72,15 @@ public class TeleportLocationData {
 	}
 	
 	public void setPrivate() {
-		this.privateTeleport = true;
+		this.isPrivate = true;
 	}
 	
 	public void setPublic() {
-		this.privateTeleport = false;
+		this.isPrivate = false;
+	}
+	
+	public void changePrivate(boolean isPrivate) {
+		this.isPrivate = isPrivate;
 	}
 	
 	/* Method -----------------------------------------------------------------------------------*/
@@ -89,7 +93,7 @@ public class TeleportLocationData {
 		sb.append("Blcok: ").append(LocationStringable.toString(blockLocation)).append("\n");
 		sb.append("Teleport: ").append(LocationStringable.toString(teleportLocation)).append("\n");
 		sb.append("Member: ").append(memberToString(member)).append("\n");
-		sb.append("Private: ").append(privateTeleport);
+		sb.append("Private: ").append(isPrivate);
 		return sb.toString();
 	}
 	
@@ -106,7 +110,11 @@ public class TeleportLocationData {
 	}
 	
 	public boolean isPrivate() {
-		return privateTeleport;
+		return isPrivate;
+	}
+	
+	public boolean hasMember(OfflinePlayer player) {
+		return member.contains(player);
 	}
 	
 	/* Private Method ---------------------------------------------------------------------------*/
@@ -198,7 +206,7 @@ public class TeleportLocationData {
 		data.set(Path.BLOCK, LocationStringable.toString(blockLocation));
 		data.set(Path.TELEPORT, LocationStringable.toString(teleportLocation));
 		data.set(Path.MEMBER, getStringUidList(member));
-		data.set(Path.PRIVATE, privateTeleport);
+		data.set(Path.PRIVATE, isPrivate);
 		
 		try {
 			data.save(file);
@@ -214,12 +222,12 @@ public class TeleportLocationData {
 		
 		YamlConfiguration data = YamlConfiguration.loadConfiguration(file);
 		
-		this.type = TeleportType.getType(data.getString(Path.TYPE));
+		this.type = TeleporterType.getType(data.getString(Path.TYPE));
 		this.owner = Bukkit.getOfflinePlayer(UUID.fromString(data.getString(Path.OWNER)));
 		this.name = data.getString(Path.NAME);
 		this.blockLocation = LocationStringable.toLocation(data.getString(Path.BLOCK));
 		this.teleportLocation = LocationStringable.toLocation(data.getString(Path.TELEPORT));
 		this.member = getOfflinePlayerList(data.getStringList(Path.MEMBER));
-		this.privateTeleport = data.getBoolean(Path.PRIVATE, false);
+		this.isPrivate = data.getBoolean(Path.PRIVATE, false);
 	}
 }

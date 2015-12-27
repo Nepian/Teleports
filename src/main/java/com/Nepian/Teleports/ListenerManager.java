@@ -4,16 +4,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 
-import com.Nepian.Teleports.Listener.ChangeTeleportDirectionListener;
-import com.Nepian.Teleports.Listener.CreateTeleportListener;
+import com.Nepian.Teleports.Listener.ChangeTeleporterDirectionListener;
 import com.Nepian.Teleports.Listener.GetTeleportLocationDataListener;
 import com.Nepian.Teleports.Listener.PlateTeleportListener;
 import com.Nepian.Teleports.Listener.RemoveTeleportListener;
+import com.Nepian.Teleports.Listener.TeleporterCreatingListener;
 import com.Nepian.Teleports.Listener.AfterCommand.AddMemberListener;
-import com.Nepian.Teleports.Listener.CreateTeleport.CreateTeleportExecutor;
-import com.Nepian.Teleports.Listener.PlayerWarp.PlayerWarpExecutor;
+import com.Nepian.Teleports.Listener.AfterCommand.ChangePrivateListener;
+import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportEndPrivateChecker;
+import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportExecutor;
+import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportLocationChecker;
+import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportStartPrivateChecker;
 import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportExecutor;
 import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportOwnerChecker;
+import com.Nepian.Teleports.Listener.TeleporterCreating.TeleporterCreatingExecutor;
+import com.Nepian.Teleports.Listener.TeleporterCreating.TeleporterCreatingLocationChecker;
+import com.Nepian.Teleports.Listener.TeleporterCreating.TeleporterCreatingNameChecker;
+import com.Nepian.Teleports.Listener.TeleporterCreating.TeleporterCreatingPermissionChecker;
 
 public class ListenerManager {
 	private static final Main plugin;
@@ -23,13 +30,13 @@ public class ListenerManager {
 	}
 	
 	public static void load() {
-		registerListener(new CreateTeleportListener());
+		registerListener(new TeleporterCreatingListener());
 		registerListener(new RemoveTeleportListener());
 		registerListener(new PlateTeleportListener());
-		registerListener(new ChangeTeleportDirectionListener());
+		registerListener(new ChangeTeleporterDirectionListener());
 		registerListener(new GetTeleportLocationDataListener());
 		
-		registerCreateTeleportListener();
+		registerTeleporterCreatingListener();
 		registerRemoveTeleportListener();
 		registerPlayerTeleportListener();
 		registerAfterCommandListener();
@@ -45,8 +52,11 @@ public class ListenerManager {
 	
 	/* Private Methods --------------------------------------------------------------------------*/
 	
-	private static void registerCreateTeleportListener() {
-		registerListener(new CreateTeleportExecutor());
+	private static void registerTeleporterCreatingListener() {
+		registerListener(new TeleporterCreatingPermissionChecker());
+		registerListener(new TeleporterCreatingLocationChecker());
+		registerListener(new TeleporterCreatingNameChecker());
+		registerListener(new TeleporterCreatingExecutor());
 	}
 	
 	private static void registerRemoveTeleportListener() {
@@ -55,10 +65,14 @@ public class ListenerManager {
 	}
 	
 	private static void registerPlayerTeleportListener() {
-		registerListener(new PlayerWarpExecutor());
+		registerListener(new PlayerTeleportLocationChecker());
+		registerListener(new PlayerTeleportStartPrivateChecker());
+		registerListener(new PlayerTeleportEndPrivateChecker());
+		registerListener(new PlayerTeleportExecutor());
 	}
 	
 	private static void registerAfterCommandListener() {
 		registerListener(new AddMemberListener());
+		registerListener(new ChangePrivateListener());
 	}
 }

@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import com.Nepian.Teleports.Data.TeleportLocationData;
+import com.Nepian.Teleports.Data.TeleporterData;
 import com.Nepian.Teleports.Event.RemoveTeleportEvent;
 
 public class RemoveTeleportOwnerChecker implements Listener {
@@ -18,7 +18,7 @@ public class RemoveTeleportOwnerChecker implements Listener {
 			return;
 		}
 		
-		TeleportLocationData data = event.getTeleportLocationData();
+		TeleporterData data = event.getTeleportLocationData();
 		UUID owner = data.getOwner().getUniqueId();
 		UUID player = event.getPlayer().getUniqueId();
 		

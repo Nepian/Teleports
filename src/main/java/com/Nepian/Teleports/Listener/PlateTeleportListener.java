@@ -1,6 +1,5 @@
 package com.Nepian.Teleports.Listener;
 
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -10,8 +9,9 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.Nepian.Teleports.ListenerManager;
-import com.Nepian.Teleports.TeleportManager;
-import com.Nepian.Teleports.Data.TeleportType;
+import com.Nepian.Teleports.TeleporterManager;
+import com.Nepian.Teleports.Data.TeleporterData;
+import com.Nepian.Teleports.Data.TeleporterType;
 import com.Nepian.Teleports.Event.PlayerTeleportEvent;
 import com.Nepian.Teleports.Util.BlockUtil;
 
@@ -24,31 +24,23 @@ public class PlateTeleportListener implements Listener {
 			return;
 		}
 		
-		if (!BlockUtil.isStonePlate(event.getClickedBlock())) {
+		if (!BlockUtil.isPlate(event.getClickedBlock())) {
 			return;
 		}
 		
 		Block block = BlockUtil.getBlockUnder(event.getClickedBlock());
 		
-		if (TeleportType.isOther(block)) {
+		if (TeleporterType.isStart(block)) {
 			return;
 		}
 		
-		if (!TeleportManager.hasTeleportLocationData(block)) {
+		if (!TeleporterManager.hasTeleporterData(block)) {
 			return;
 		}
 		
-		String name = TeleportManager.getTeleportName(block);
+		TeleporterData data = TeleporterManager.getTeleporterData(block);
 		Player player = event.getPlayer();
-		
-		if (!TeleportManager.hasTeleportLocation(block)) {
-			player.sendMessage("This teleport is Closed! (" + name + ")");
-			return;
-		}
-		
-		Location teleportLocation = TeleportManager.getTeleportLocation(name);
-		
-		Event eve = new PlayerTeleportEvent(player, block, teleportLocation, name);
+		Event eve = new PlayerTeleportEvent(player, block, data);
 		
 		ListenerManager.callEvent(eve);
 	}

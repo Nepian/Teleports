@@ -1,22 +1,22 @@
-package com.Nepian.Teleports.Listener.CreateTeleport;
+package com.Nepian.Teleports.Listener.TeleporterCreating;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
-import com.Nepian.Teleports.TeleportManager;
-import com.Nepian.Teleports.Event.CreateTeleportEvent;
+import com.Nepian.Teleports.TeleporterManager;
+import com.Nepian.Teleports.Event.TeleporterCreatingEvent;
 
-public class CreateTeleportExecutor implements Listener {
+public class TeleporterCreatingExecutor implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public static void onCreateTeleport(CreateTeleportEvent event) {
+	public static void onCreateTeleport(TeleporterCreatingEvent event) {
 		
 		if (event.isCancelled()) {
 			return;
 		}
 		
-		TeleportManager.put(event);	
+		TeleporterManager.put(event);	
 		String name = event.getName();
 		String message = "Created the new teleport! (" + name + ")";
 		event.getPlayer().sendMessage(message);

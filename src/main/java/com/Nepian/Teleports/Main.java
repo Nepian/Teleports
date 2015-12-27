@@ -14,12 +14,12 @@ public class Main extends JavaPlugin {
 		Config.load();
 		ListenerManager.load();
 		CommandManager.load();
-		TeleportManager.load();
+		TeleporterManager.load();
 	}
 	
 	@Override
 	public void onDisable() {
-		TeleportManager.save();
+		TeleporterManager.save();
 		Config.save();
 	}
 	

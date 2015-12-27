@@ -1,21 +1,20 @@
 package com.Nepian.Teleports.Event;
 
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+
+import com.Nepian.Teleports.Data.TeleporterData;
 
 public class PlayerTeleportEvent extends CancellableEvent {
 	private Player player;
 	private Block block;
-	private Location location;
-	private String name;
+	private TeleporterData data;
 	
-	public PlayerTeleportEvent(Player player, Block block, Location location, String name) {
+	public PlayerTeleportEvent(Player player, Block block, TeleporterData data) {
 		super();
 		this.player = player;
 		this.block = block;
-		this.location = location;
-		this.name = name;
+		this.data = data;
 	}
 	
 	public Player getPlayer() {
@@ -26,11 +25,7 @@ public class PlayerTeleportEvent extends CancellableEvent {
 		return block;
 	}
 	
-	public Location getLocation() {
-		return location;
-	}
-	
-	public String getName() {
-		return name;
+	public TeleporterData getTeleporterData() {
+		return data;
 	}
 }

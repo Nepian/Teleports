@@ -9,19 +9,19 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 
 import com.Nepian.Teleports.Configuration.Files;
-import com.Nepian.Teleports.Data.TeleportLocationData;
-import com.Nepian.Teleports.Data.TeleportType;
-import com.Nepian.Teleports.Event.CreateTeleportEvent;
+import com.Nepian.Teleports.Data.TeleporterData;
+import com.Nepian.Teleports.Data.TeleporterType;
 import com.Nepian.Teleports.Event.RemoveTeleportEvent;
+import com.Nepian.Teleports.Event.TeleporterCreatingEvent;
 
-public class TeleportManager {
+public class TeleporterManager {
 	private static File teleportLocationDataFolder = Files.FOLDER_TELEPORTS;
-	private static Map<Location, TeleportLocationData> teleports;
-	private static Map<String, TeleportLocationData> names;
+	private static Map<Location, TeleporterData> teleports;
+	private static Map<String, TeleporterData> names;
 	
 	static {
-		teleports = new HashMap<Location, TeleportLocationData>();
-		names = new HashMap<String, TeleportLocationData>();
+		teleports = new HashMap<Location, TeleporterData>();
+		names = new HashMap<String, TeleporterData>();
 	}
 	
 	/* Methods ----------------------------------------------------------------------------------*/
@@ -30,8 +30,8 @@ public class TeleportManager {
 	 * テレポートデータを登録する
 	 * @param event
 	 */
-	public static void put(CreateTeleportEvent event) {
-		put(new TeleportLocationData(event));
+	public static void put(TeleporterCreatingEvent event) {
+		put(new TeleporterData(event));
 	}
 	
 	/**
@@ -66,17 +66,17 @@ public class TeleportManager {
 	 * @param block = (追加済)-> TeleportManager
 	 * @return (存在)-> TeleportType (非存在)-> TeleportType.OTHER
 	 */
-	public static TeleportType getType(Block block) {
+	public static TeleporterType getType(Block block) {
 		return getType(block.getLocation());
 	}
 	
 	/**
-	 * 指定したブロックがテレポートデータを所持しているかを判定する
+	 * 指定したブロックがテレポータデータを所持しているかを判定する
 	 * @param block = (確認対象)
 	 * @return (所持)-> true (非所持)-> false
 	 */
-	public static boolean hasTeleportLocationData(Block block) {
-		return hasTeleportLocationData(block.getLocation());
+	public static boolean hasTeleporterData(Block block) {
+		return hasTeleporterData(block.getLocation());
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class TeleportManager {
 	 * 登録されているテレポートデータのコレクションを取得する
 	 * @return Collection(TeleportLocationData)
 	 */
-	public static Collection<TeleportLocationData> getTeleportLocationDatas() {
+	public static Collection<TeleporterData> getTeleportLocationDatas() {
 		return teleports.values();
 	}
 	
@@ -119,15 +119,15 @@ public class TeleportManager {
 	 * @param block = (追加済)-> TeleportManager
 	 * @return (存在)-> TeleportLocationData (非存在)-> null
 	 */
-	public static TeleportLocationData getTeleportLocationData(Block block) {
-		return getTeleportLocationData(block.getLocation());
+	public static TeleporterData getTeleporterData(Block block) {
+		return getTeleporterData(block.getLocation());
 	}
 	
 	/**
 	 * 登録されている終点のテレポートデータをコレクションで取得する
 	 * @return Collection(TeleportLocationData)
 	 */
-	public static Collection<TeleportLocationData> getEndLocationDatas() {
+	public static Collection<TeleporterData> getEndLocationDatas() {
 		return names.values();
 	}
 	
@@ -136,33 +136,33 @@ public class TeleportManager {
 	 * @param name = (追加済)-> TeleportManager
 	 * @return (存在)-> String (非存在)-> null
 	 */
-	public static TeleportLocationData getEndLocationData(String name) {
+	public static TeleporterData getEndLocationData(String name) {
 		return names.get(name);
 	}
 	
 	/* Private Methods --------------------------------------------------------------------------*/
 	
-	private static boolean isEnd(TeleportType type) {
-		return type == TeleportType.END;
+	private static boolean isEnd(TeleporterType type) {
+		return type == TeleporterType.END;
 	}
 	
-	private static void put(TeleportLocationData data) {
+	private static void put(TeleporterData data) {
 		if (isEnd(data.getType())) {
 			names.put(data.getName(), data);
 		}
 		teleports.put(data.getBlockLocation(), data);
 	}
 	
-	private static TeleportLocationData getTeleportLocationData(Location location) {
+	private static TeleporterData getTeleporterData(Location location) {
 		return teleports.get(location);
 	}
 	
 	/**
-	 * 指定した場所のテレポートデータを所持しているか判定する
+	 * 指定した場所のテレポータデータを所持しているか判定する
 	 * @param location = (確認対象)
 	 * @return (所持)-> true (非所持)-> false
 	 */
-	private static boolean hasTeleportLocationData(Location location) {
+	private static boolean hasTeleporterData(Location location) {
 		return teleports.containsKey(location);
 	}
 	
@@ -171,7 +171,7 @@ public class TeleportManager {
 	 * @param location = (追加済)-> TeleportManager
 	 * @return (存在)-> TeleportType (非存在)-> TeleportType.OTHER
 	 */
-	private static TeleportType getType(Location location) {
+	private static TeleporterType getType(Location location) {
 		return teleports.get(location).getType();
 	}
 	
@@ -181,7 +181,7 @@ public class TeleportManager {
 	 * @return (存在)-> String (非存在)-> null
 	 */
 	private static String getTeleportName(Location location) {
-		if (!hasTeleportLocationData(location)) return null;
+		if (!hasTeleporterData(location)) return null;
 		return teleports.get(location).getName();
 	}
 	
@@ -190,7 +190,7 @@ public class TeleportManager {
 	 * @param location
 	 */
 	private static void remove(Location location) {
-		TeleportLocationData tld = teleports.get(location);
+		TeleporterData tld = teleports.get(location);
 		if (isEnd(tld.getType())) {
 			names.remove(tld.getName());
 		}
@@ -201,14 +201,14 @@ public class TeleportManager {
 	/* Load and Save Method ---------------------------------------------------------------------*/
 	
 	public static void save() {
-		for (TeleportLocationData tld : teleports.values()) {
+		for (TeleporterData tld : teleports.values()) {
 			tld.write();
 		}
 	}
 	
 	public static void load() {
 		for (File file : teleportLocationDataFolder.listFiles()) {
-			put(new TeleportLocationData(file));
+			put(new TeleporterData(file));
 		}
 	}
 }

@@ -2,12 +2,12 @@ package com.Nepian.Teleports.Data;
 
 import org.bukkit.block.Block;
 
-public enum TeleportType {
+public enum TeleporterType {
 	START,
 	END,
 	OTHER;
 	
-	public static TeleportType getType(Block block) {
+	public static TeleporterType getType(Block block) {
 		switch (block.getType()) {
 		case EMERALD_BLOCK:
 			return START;
@@ -18,8 +18,8 @@ public enum TeleportType {
 		}
 	}
 	
-	public static TeleportType getType(String string) {
-		for (TeleportType type : values()) {
+	public static TeleporterType getType(String string) {
+		for (TeleporterType type : values()) {
 			if (string.equalsIgnoreCase(type.toString())) {
 				return type;
 			}

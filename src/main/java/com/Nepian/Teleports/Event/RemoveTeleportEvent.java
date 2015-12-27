@@ -3,14 +3,14 @@ package com.Nepian.Teleports.Event;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import com.Nepian.Teleports.Data.TeleportLocationData;
+import com.Nepian.Teleports.Data.TeleporterData;
 
 public class RemoveTeleportEvent extends CancellableEvent {
 	private Player player;
 	private Block block;
-	private TeleportLocationData data;
+	private TeleporterData data;
 	
-	public RemoveTeleportEvent(Player player, Block block, TeleportLocationData data) {
+	public RemoveTeleportEvent(Player player, Block block, TeleporterData data) {
 		super();
 		this.player = player;
 		this.block = block;
@@ -25,7 +25,7 @@ public class RemoveTeleportEvent extends CancellableEvent {
 		return block;
 	}
 	
-	public TeleportLocationData getTeleportLocationData() {
+	public TeleporterData getTeleportLocationData() {
 		return data;
 	}
 }

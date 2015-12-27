@@ -4,18 +4,18 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import com.Nepian.Teleports.Data.TeleportType;
+import com.Nepian.Teleports.Data.TeleporterType;
 
-public class CreateTeleportEvent extends CancellableEvent {
-	private TeleportType type;
+public class TeleporterCreatingEvent extends CancellableEvent {
+	private TeleporterType type;
 	private Player player;
 	private Block block;
 	private String name;
 	private Location location;
 	
-	public CreateTeleportEvent(Player player, Block block, String name) {
+	public TeleporterCreatingEvent(Player player, Block block, String name) {
 		super();
-		this.type = TeleportType.getType(block);
+		this.type = TeleporterType.getType(block);
 		this.player = player;
 		this.block = block;
 		this.name = name;
@@ -38,7 +38,7 @@ public class CreateTeleportEvent extends CancellableEvent {
 		return location;
 	}
 	
-	public TeleportType getType() {
+	public TeleporterType getType() {
 		return type;
 	}
 }

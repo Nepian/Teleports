@@ -7,9 +7,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.Nepian.Teleports.TeleportManager;
-import com.Nepian.Teleports.Data.TeleportLocationData;
-import com.Nepian.Teleports.Data.TeleportSettingType;
+import com.Nepian.Teleports.TeleporterManager;
+import com.Nepian.Teleports.Data.TeleporterData;
+import com.Nepian.Teleports.Data.TeleporterSettingType;
 
 public class GetTeleportLocationDataListener implements Listener {
 
@@ -22,18 +22,18 @@ public class GetTeleportLocationDataListener implements Listener {
 		
 		Player player = event.getPlayer();
 		
-		if (!TeleportSettingType.isGetInfoItem(player.getItemInHand())) {
+		if (!TeleporterSettingType.isInformationGettingItem(player.getItemInHand())) {
 			return;
 		}
 		
 		Block block = event.getClickedBlock();
 		
-		if (!TeleportManager.hasTeleportLocationData(block)) {
+		if (!TeleporterManager.hasTeleporterData(block)) {
 			player.sendMessage("This block is NOT Teleport block!");
 			return;
 		}
 		
-		TeleportLocationData data = TeleportManager.getTeleportLocationData(block);
+		TeleporterData data = TeleporterManager.getTeleporterData(block);
 		
 		String strData = data.toString();
 		
