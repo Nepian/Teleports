@@ -2,6 +2,8 @@ package com.Nepian.Teleports.Util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 
 public class PlayerUtil {
 
@@ -12,5 +14,9 @@ public class PlayerUtil {
 			}
 		}
 		return null;
+	}
+	
+	public static void playSound(Player player, Sound sound, float volume, float pitch) {
+		player.getWorld().playSound(player.getLocation(), sound, volume, pitch);
 	}
 }

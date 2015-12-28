@@ -13,6 +13,7 @@ import com.Nepian.Teleports.Listener.AfterCommand.ChangePrivateListener;
 import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportEndPrivateChecker;
 import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportExecutor;
 import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportLocationChecker;
+import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportSounder;
 import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportStartPrivateChecker;
 import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportExecutor;
 import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportOwnerChecker;
@@ -75,6 +76,7 @@ public class ListenerManager {
 		registerListener(new PlayerTeleportStartPrivateChecker());
 		registerListener(new PlayerTeleportEndPrivateChecker());
 		registerListener(new PlayerTeleportExecutor());
+		registerListener(new PlayerTeleportSounder());
 	}
 	
 	private static void registerAfterCommandListener() {
