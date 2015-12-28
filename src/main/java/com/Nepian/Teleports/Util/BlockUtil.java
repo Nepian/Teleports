@@ -3,6 +3,8 @@ package com.Nepian.Teleports.Util;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 import org.bukkit.material.Attachable;
 
 public class BlockUtil {
@@ -25,6 +27,10 @@ public class BlockUtil {
 	
 	public static Material getType(Block block) {
 		return block.getType();
+	}
+	
+	public static BlockState getState(Block block) {
+		return block.getState();
 	}
 
 	public static boolean isStonePlate(Block block) {
@@ -49,6 +55,10 @@ public class BlockUtil {
 	
 	public static boolean isWoodButton(Block block) {
 		return getType(block) == Material.WOOD_BUTTON;
+	}
+	
+	public static boolean isSign(Block block) {
+		return getState(block) instanceof Sign;
 	}
 	
 	public static boolean isPlate(Block block) {
