@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import com.Nepian.Teleports.Data.TeleporterData;
 import com.Nepian.Teleports.Event.TeleporterRemovingEvent;
 
-public class RemoveTeleportOwnerChecker implements Listener {
+public class TeleporterRemovingOwnerChecker implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW)
 	public static void onRemoveTeleport(TeleporterRemovingEvent event) {

@@ -25,3 +25,4 @@ permissions:
       Teleports.command.addmember: true
       Teleports.command.changeprivate: true
       Teleports.create: true
+      Teleports.remove: true

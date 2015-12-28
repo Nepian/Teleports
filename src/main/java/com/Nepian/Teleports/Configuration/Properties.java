@@ -9,4 +9,5 @@ public class Properties {
 	
 	public static final String PERM_ADMIN = PERM_BASE + "admin";
 	public static final String PERM_TELEPORTER_CREATE = PERM_BASE + "create";
+	public static final String PERM_TELEPORTER_REMOVE = PERM_BASE + "remove";
 }

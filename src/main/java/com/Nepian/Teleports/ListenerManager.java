@@ -15,8 +15,9 @@ import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportExecutor;
 import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportLocationChecker;
 import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportSounder;
 import com.Nepian.Teleports.Listener.PlayerTeleport.PlayerTeleportStartPrivateChecker;
-import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportExecutor;
-import com.Nepian.Teleports.Listener.RemoveTeleport.RemoveTeleportOwnerChecker;
+import com.Nepian.Teleports.Listener.RemoveTeleport.TeleporterRemovingExecutor;
+import com.Nepian.Teleports.Listener.RemoveTeleport.TeleporterRemovingOwnerChecker;
+import com.Nepian.Teleports.Listener.RemoveTeleport.TeleporterRemovingPermissionChecker;
 import com.Nepian.Teleports.Listener.TeleporterCreating.TeleporterCreatingExecutor;
 import com.Nepian.Teleports.Listener.TeleporterCreating.TeleporterCreatingLocationChecker;
 import com.Nepian.Teleports.Listener.TeleporterCreating.TeleporterCreatingNameChecker;
@@ -67,8 +68,9 @@ public class ListenerManager {
 	}
 	
 	private static void registerRemoveTeleportListener() {
-		registerListener(new RemoveTeleportOwnerChecker());
-		registerListener(new RemoveTeleportExecutor());
+		registerListener(new TeleporterRemovingPermissionChecker());
+		registerListener(new TeleporterRemovingOwnerChecker());
+		registerListener(new TeleporterRemovingExecutor());
 	}
 	
 	private static void registerPlayerTeleportListener() {
