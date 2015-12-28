@@ -9,10 +9,10 @@ import org.bukkit.metadata.MetadataValue;
 
 import com.Nepian.Teleports.Main;
 import com.Nepian.Teleports.TeleporterManager;
+import com.Nepian.Teleports.Configuration.MetadataKeys;
 import com.Nepian.Teleports.Configuration.Properties;
 import com.Nepian.Teleports.Data.TeleporterData;
 import com.Nepian.Teleports.Data.TeleporterType;
-import com.Nepian.Teleports.Metadata.MetadataKeys;
 import com.Nepian.Teleports.Util.ActionUtil;
 
 public class ChangePrivateListener implements Listener {

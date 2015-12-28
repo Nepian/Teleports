@@ -1,4 +1,4 @@
-package com.Nepian.Teleports.Metadata;
+package com.Nepian.Teleports.Configuration;
 
 public class MetadataKeys {
 
