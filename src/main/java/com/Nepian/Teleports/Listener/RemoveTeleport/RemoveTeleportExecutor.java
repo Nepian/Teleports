@@ -5,12 +5,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import com.Nepian.Teleports.TeleporterManager;
-import com.Nepian.Teleports.Event.RemoveTeleportEvent;
+import com.Nepian.Teleports.Event.TeleporterRemovingEvent;
 
 public class RemoveTeleportExecutor implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public static void onRemoveTeleport(RemoveTeleportEvent event) {
+	public static void onRemoveTeleport(TeleporterRemovingEvent event) {
 		
 		if (event.isCancelled()) {
 			return;

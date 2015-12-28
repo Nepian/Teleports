@@ -11,7 +11,7 @@ import org.bukkit.block.Block;
 import com.Nepian.Teleports.Configuration.Files;
 import com.Nepian.Teleports.Data.TeleporterData;
 import com.Nepian.Teleports.Data.TeleporterType;
-import com.Nepian.Teleports.Event.RemoveTeleportEvent;
+import com.Nepian.Teleports.Event.TeleporterRemovingEvent;
 import com.Nepian.Teleports.Event.TeleporterCreatingEvent;
 
 public class TeleporterManager {
@@ -38,7 +38,7 @@ public class TeleporterManager {
 	 * テレポートデータを削除する
 	 * @param event
 	 */
-	public static void remove(RemoveTeleportEvent event) {
+	public static void remove(TeleporterRemovingEvent event) {
 		remove(event.getTeleportLocationData().getBlockLocation());
 	}
 	

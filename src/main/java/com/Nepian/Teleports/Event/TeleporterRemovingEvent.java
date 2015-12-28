@@ -5,12 +5,12 @@ import org.bukkit.entity.Player;
 
 import com.Nepian.Teleports.Data.TeleporterData;
 
-public class RemoveTeleportEvent extends CancellableEvent {
+public class TeleporterRemovingEvent extends CancellableEvent {
 	private Player player;
 	private Block block;
 	private TeleporterData data;
 	
-	public RemoveTeleportEvent(Player player, Block block, TeleporterData data) {
+	public TeleporterRemovingEvent(Player player, Block block, TeleporterData data) {
 		super();
 		this.player = player;
 		this.block = block;

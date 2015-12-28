@@ -12,9 +12,9 @@ import com.Nepian.Teleports.TeleporterManager;
 import com.Nepian.Teleports.Data.TeleporterData;
 import com.Nepian.Teleports.Data.TeleporterType;
 import com.Nepian.Teleports.Event.CancellableEvent;
-import com.Nepian.Teleports.Event.RemoveTeleportEvent;
+import com.Nepian.Teleports.Event.TeleporterRemovingEvent;
 
-public class RemoveTeleportListener implements Listener {
+public class TeleporterRemovingListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public static void onBlockBreak(BlockBreakEvent event) {
@@ -30,7 +30,7 @@ public class RemoveTeleportListener implements Listener {
 		Player player = event.getPlayer();
 		Block block = event.getBlock();
 		TeleporterData data = TeleporterManager.getTeleporterData(block);
-		CancellableEvent eve = new RemoveTeleportEvent(player, block, data);
+		CancellableEvent eve = new TeleporterRemovingEvent(player, block, data);
 		ListenerManager.callEvent(eve);
 		
 		if (eve.isCancelled()) {

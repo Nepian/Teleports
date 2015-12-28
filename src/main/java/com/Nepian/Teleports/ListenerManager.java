@@ -8,7 +8,7 @@ import com.Nepian.Teleports.Listener.ButtonTeleportListener;
 import com.Nepian.Teleports.Listener.ChangeTeleporterDirectionListener;
 import com.Nepian.Teleports.Listener.GetTeleportLocationDataListener;
 import com.Nepian.Teleports.Listener.PlateTeleportListener;
-import com.Nepian.Teleports.Listener.RemoveTeleportListener;
+import com.Nepian.Teleports.Listener.TeleporterRemovingListener;
 import com.Nepian.Teleports.Listener.TeleporterCreatingListener;
 import com.Nepian.Teleports.Listener.AfterCommand.AddMemberListener;
 import com.Nepian.Teleports.Listener.AfterCommand.ChangePrivateListener;
@@ -32,7 +32,7 @@ public class ListenerManager {
 	
 	public static void load() {
 		registerListener(new TeleporterCreatingListener());
-		registerListener(new RemoveTeleportListener());
+		registerListener(new TeleporterRemovingListener());
 		
 		registerListener(new PlateTeleportListener());
 		registerListener(new ButtonTeleportListener());
